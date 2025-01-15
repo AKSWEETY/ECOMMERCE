@@ -1,0 +1,64 @@
+{% if session['role']== "admin" %}
+   {% include "admin_head.html" %}
+{% endif %}
+
+{% if session['role']== "user" %}
+   {% include "user_head.html" %}
+{% endif %}
+
+
+<div class="mt-120">
+    <div class="card-title"> View Sale Packages</div>
+</div>
+
+<div class="mt-10 row2 ml-10 gap-10">
+    {% for sale_package in sale_packages %}
+    <div class="card p-20 w-20">
+        <div class="flex mt-10">
+            <div class="font-weight">Package Title:</div>
+            <div class="card-text ml-30">{{sale_package[1]}}</div>
+        </div>
+         <div class="flex mt-10">
+            <div class="font-weight">Customer Reach:</div>
+            <div class="card-text ml-20">{{sale_package[2]}}</div>
+        </div>
+         <div class="flex mt-10">
+            <div class="font-weight">Package Price:</div>
+            <div class="card-text ml-30">{{sale_package[3]}}</div>
+        </div>
+         <div class="flex mt-10">
+            <div class="font-weight">Package Validity:</div>
+            <div class="card-text ml-20">{{sale_package[4]}}</div>
+        </div>
+    </div>
+    {% endfor%}
+</div>
+
+{% if session['role']== "user" %}
+<div class="mt-10 row2 ml-10 gap-10">
+    {% for package in packages %}
+    <div class="card p-20 w-20">
+        <div class="flex mt-10">
+            <div class="font-weight">Package Title:</div>
+            <div class="card-text ml-30">{{package[1]}}</div>
+        </div>
+         <div class="flex mt-10">
+            <div class="font-weight">Customer Reach:</div>
+            <div class="card-text ml-20">{{package[2]}}</div>
+        </div>
+         <div class="flex mt-10">
+            <div class="font-weight">Package Price:</div>
+            <div class="card-text ml-30">{{package[3]}}</div>
+        </div>
+         <div class="flex mt-10">
+            <div class="font-weight">Package Validity:</div>
+            <div class="card-text ml-20">{{package[4]}}</div>
+        </div>
+
+         <div class="mt-20">
+             <div class=""><a href="payments?product_id={{product_id}}&package_id={{package[0]}}&price={{package[3]}}" class="form-btn txt-none">Select</a></div>
+         </div>
+    </div>
+    {% endfor%}
+</div>
+{% endif %}

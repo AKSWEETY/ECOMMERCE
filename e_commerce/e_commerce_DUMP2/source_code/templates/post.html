@@ -1,0 +1,135 @@
+{% include "user_head.html" %}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+
+function add_like(post_id){
+    let url = "/add_like?post_id="+post_id
+    $.get(url,function(data,status){
+            console.log(data);
+         $("#like_container"+post_id).html(data)
+    })
+}
+
+$(document).ready(function(){
+    $("#shares").hide();
+    $("#comments").hide();
+
+});
+function get_comments(post_id){
+alert("hello");
+    $("#comments").show();
+    $("#shares").hide();
+    let url = "/get_comments?post_id="+post_id
+    $.get(url,function(data,status){
+         let comments = data['comments']
+         $("#comments").html(data)
+    })
+}
+function get_shares(post_id){
+    $("#shares").show();
+    $("#comments").hide();
+    let url = "/get_shares?post_id="+post_id
+    $.get(url,function(data,status){
+         let shares = data['shares']
+         $("#shares").html(data)
+    })
+}
+
+</script>
+
+
+
+<body class="add_post_bg_color">
+
+    <div class="row mt-100">
+        <div class="w-20">
+            <div class=""><a href="/add_post" class="form-btn txt-none">Add Post</a></div>
+        </div>
+        <div class="card-label w-60">
+            <div class="mr-25p">View Posts</div>
+        </div>
+    </div>
+
+    <div class="mt-20">
+        <div class="">
+        {% for post in posts %}
+            {% set user = get_user_id_in_post(post[8]) %}
+            {% set likes_count = get_likes_count_by_post_id(post[0]) %}
+            {% set comment_count = get_comment_count_by_post_id(post[0]) %}
+            {% set share_count = get_share_count_by_post_id(post[0]) %}
+            {% set is_liked = is_user_liked_the_post(post[0]) %}
+            <div class="mt-10 flex">
+                <div id="shares" class=""></div>
+                <div class="post-card w-35 p-20 ml-25p ">
+                    <div class="flex">
+                        <div class="w-20">
+                            <img src="../static/E_commerce_files/{{user[7]}}" class="w-100" style="max-width:100%; border-radius:50px;">
+                        </div>
+                            <div class="mt-30 ml-20">{{user[1]}}</div>
+                            <div class="mt-30 ml-40">{{post[5].strftime("%d-%m-%Y %H:%M")}}</div>
+                    </div>
+                    <div class="ml-40">
+                        <div class="w-80">{{post[4]}}</div>
+                    </div>
+                    {% if post[1] != '' %}
+                    <div class="mt-20">
+                         <div class="w-100">
+                            <img src="../static/posted_files/images/{{post[1]}}" class="w-100" style="max-width:100%; border-radius:14px;">
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if post[2] != '' %}
+                    <div class="mt-100">
+                        <audio class="p-100" controls>
+                          <source src="../static/posted_files/audio/{{post[2]}}" type="audio/mpeg" >
+                        </audio>
+                    </div>
+                    {% endif %}
+                    {% if post[3] != '' %}
+                    <div>
+                        <video width="490" height="400" controls>
+                          <source src="../static/posted_files/video/{{post[3]}}"  type="video/ogg">
+                        </video>
+                    </div>
+                    {% endif %}
+
+                    <div class="like-dislike-container mt-20 space-around" >
+                        <div id="like_container{{post[0]}}">
+                            {% if is_liked %}
+                             <button id="likeBtn" class="btn" onclick="add_like('{{post[0]}}')">
+                                💚 <span id="likes_count{{post[0]}}" class="p-10">{{likes_count}}</span>
+                            </button>
+                            {% else %}
+
+                            <button id="likeBtn" class="btn" onclick="add_like('{{post[0]}}')">
+                               ❤️  <span id="likes_count{{post[0]}}" class="p-10">{{likes_count}}</span>
+                            </button>
+                            {% endif %}
+                        </div>
+
+                         <button id="shareBtn" class="btn" onclick="get_shares('{{post[0]}}')">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="25" fill="red" class="bi bi-share-fill" viewBox="0 0 16 16">
+                                <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5"/>
+                             </svg>
+                            <span id="shareCount" class="p-10">{{share_count}}</span>
+                        </button>
+                        <button id="commentBtn" class="btn" onclick="get_comments('{{post[0]}}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="25px" fill="red" class="bi bi-chat-fill" viewBox="0 0 16 16">
+                              <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9 9 0 0 0 8 15"/>
+                            </svg>
+                             <span id="commentCount" class="p-10">{{comment_count}}</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="comments" class=""></div>
+            </div>
+        {% endfor %}
+            </div>
+    </div>
+
+</body>
+
+

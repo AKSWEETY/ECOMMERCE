@@ -1,0 +1,72 @@
+{% include "user_head.html" %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function(){
+    view_groups();
+   });
+function view_groups(){
+    let user_group_id = $("#user_group_id").val()
+    let url = "/get_group_members_by_group_id?user_group_id="+user_group_id
+    $.get(url, function(data, status){
+        console.log(data)
+        $("#group_members").html(data)
+        view_group_in_members()
+    });
+}
+function view_group_in_members(){
+    let user_group_id = $("#user_group_id").val()
+    let url = "/get_in_group_members_by_group_id?user_group_id="+user_group_id
+    $.get(url, function(data, status){
+        console.log(data)
+        $("#in_group_members").html(data)
+    });
+}
+</script>
+
+
+
+
+
+<div class="mt-100"></div>
+
+<div class="mt-30">
+    {% for user_group in user_groups %}
+    <input type="hidden" name="user_group_id" id="user_group_id" value="{{user_group[0]}}">
+
+    <div class="card p-20 w-98 m-auto">
+        <div class="flex">
+            <div class="w-20">
+                <img src="../static/E_commerce_files/{{user_group[2]}}" class="w-100" style="width:200px; height:200px; border-radius:50px;">
+            </div>
+            <div class="mt-10 ml-20 w-80">
+                <div class="flex">
+                    <div class="flex">
+                        <div class="ml-10"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="20" fill="pink" viewBox="0 0 24 24">
+                              <path fill-rule="evenodd" d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div class="ml-10 txt-bold txt-color-nav">{{user_group[1]}}</div>
+                    </div>
+                    <div class="flex ml-30 ">
+                        <div class="ml-10">Created On</div>
+                        <div class="ml-10 txt-bold txt-color-nav">{{user_group[4].strftime("%d-%m-%Y")}}</div>
+                    </div>
+                    <div class="flex  ml-30">
+                        <div class="ml-10">Description:</div>
+                        <div class="ml-10 txt-bold txt-color-nav">{{user_group[3]}}</div>
+                    </div>
+                </div>
+                <div class="mt-10"><hr></div>
+                <div class="text-center mt-5 txt-bold text-primary"> Group Members</div>
+                <div id="in_group_members"></div>
+                <div class="mt-50"><hr></div>
+                <div class="text-center mt-5 txt-bold text-primary"> Friends List</div>
+                <div id="group_members"></div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+

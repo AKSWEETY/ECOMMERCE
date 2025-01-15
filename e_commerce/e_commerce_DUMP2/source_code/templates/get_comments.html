@@ -1,0 +1,38 @@
+<script>
+
+function add_comment(e,post_id){
+    e.preventDefault();
+    let comment = document.getElementById("comment").value;
+    let url = "/add_comment?post_id="+post_id+"&comment="+comment
+    $.get(url,function(data,status){
+    get_comments(post_id)
+    alert("Your Comment Added Successfully");
+    })
+}
+
+</script>
+
+<div class="mt-100 sticky ">
+    <div class="scroll2 w-180">
+        <div class="comment-section">
+            <h2>Leave a Comment</h2>
+                <form onsubmit="add_comment(event, '{{post_id}}')">
+                    <textarea id="comment" name="comment"  rows="3" placeholder="Write your comment here..."></textarea>
+                    <input type="submit" value="Add Comment" class="form-btn">
+                </form>
+            <div class="mt-10"> <h3>Comments:</h3> </div>
+            <div id="commentList" class="comment-list"></div>
+            {% for comment in comments %}
+            {% set user = get_user_id_in_comment(comment[3]) %}
+            <div class="mt-10">
+                <div class="flex">
+                    <div>{{comment[1]}}</div>
+                    <div class="fs-10 mt-5 ml-10">{{comment[2]}}</div>
+                </div>
+                <div class="mt-10"><i>Comment By:</i> {{user[1]}}</div>
+                <hr>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

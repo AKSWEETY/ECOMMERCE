@@ -1,0 +1,45 @@
+{% include "user_head.html" %}
+
+<div class="add_product_bg_img img-utility">
+    <div class="mt-120">
+        <div class="post-card w-30 m-auto p-20">
+            <form action="add_product_action" method="post" enctype="multipart/form-data">
+                <div class="card-title">Add Product</div>
+                <div class="mt-20">
+                    <label>Location</label>
+                    <select class="form-input" name="location_id" id="location" required>
+                        <option value="">Choose Location</option>
+                        {% for location in locations %}
+                        <option value="{{location[0]}}">{% if str(location[0])==str(location_id) %}selected{% endif %}
+                            {{location[1]}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mt-10">
+                    <label for="product_name">Product Name</label>
+                    <input type="text" name="product_name" id="product_name" class="form-input" placeholder="Enter product name">
+                </div>
+                <div class="mt-10">
+                    <label for="price">Price</label>
+                    <input type="number" name="price" id="price" class="form-input" placeholder="Enter product price">
+                </div>
+                <div class="mt-10">
+                    <label for="picture">Picture</label>
+                    <input type="file" name="picture" id="picture" class="form-input">
+                </div>
+                <div class="mt-10">
+                    <label for="quantity">Quantity</label>
+                    <input type="text" name="quantity" id="quantity" class="form-input" placeholder="Enter product quantity">
+                </div>
+                <div class="mt-10">
+                     <label for="description">Description</label>
+                     <textarea id="description" name="description"  rows="2" placeholder="Write about your product here..." class="form-input"></textarea>
+                </div>
+               <div class="mt-10">
+                    <input type="submit" value="Next" class="form-btn">
+               </div>
+            </form>
+        </div>
+    </div>
+</div>

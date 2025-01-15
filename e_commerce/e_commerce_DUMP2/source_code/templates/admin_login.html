@@ -1,0 +1,26 @@
+{% include "main_head.html" %}
+
+<div class="mt-150 "></div>
+<body class="admin-bg-colo">
+    <div class="flex">
+        <div class=" img-utilityAL">
+            <img src="../static/images/adminLog-bg-img.png" class="adminLog">
+        </div>
+        <div class="card w-30 p-20 m-auto">
+            <div class="card-title mt-20">Admin Login</div>
+            <form action="admin_login_action" method="post">
+                <div class="mt-50">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter Username" class="form-input mt-10" required>
+                </div>
+                <div class="mt-20">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter  Password" class="form-input mt-10" required>
+                </div>
+                <div class="mt-30">
+                    <input type="submit" value="Submit" class="form-btn">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>

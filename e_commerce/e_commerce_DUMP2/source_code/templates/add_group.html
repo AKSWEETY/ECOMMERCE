@@ -1,0 +1,25 @@
+{% include "user_head.html" %}
+
+<div class="mt-150 ">
+    <div class="card w-30 p-20 m-auto">
+        <div class="card-title mt-20">Add Group</div>
+        <form action="add_group_action" method="post" enctype="multipart/form-data">
+            <div class="mt-20">
+                <label for="group_name">Group Name</label>
+                <input type="text" id="group_name" name="group_name" placeholder="Enter Group Name" class="form-input" required>
+            </div>
+            <div class="mt-20">
+                <label for="image">Group Image</label>
+                <input type="file" id="image" name="image"  class="form-input" required>
+            </div>
+            <div class="mt-20">
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" placeholder="Enter  Description"  class="form-input" required>
+            </div>
+            <div class="mt-30">
+                <input type="submit" value="Add Group" class="form-btn">
+            </div>
+           <div class="mt-10 txt-center color-pink text-color"> {{message}}</div>
+        </form>
+    </div>
+</div>

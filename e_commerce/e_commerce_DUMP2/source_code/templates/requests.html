@@ -1,0 +1,30 @@
+{% include "user_head.html" %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    let hostname = $("#hostname").val()
+    get_users();
+});
+function get_users(){
+    let hostname = $("#hostname").val()
+    let url = "/get_users?required_type=request_sent"
+    let url2 = "/get_users?required_type=request_received"
+    $.get(url, function(data, status){
+        console.log(data)
+        $("#request_sent").html(data)
+         $.get(url2, function(data, status){
+            console.log(data)
+            $("#request_received").html(data)
+        });
+    });
+
+}
+</script>
+
+<div class="mt-100 ">
+    <div class="">
+        <div id="request_sent"></div>
+        <div id="request_received"></div>
+    </div>
+</div>

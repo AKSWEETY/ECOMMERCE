@@ -1,0 +1,58 @@
+{% include "user_head.html" %}
+
+
+<div class="row mt-100">
+    <div class="w-20">
+        <div class=""><a href="/add_product" class="form-btn txt-none">Add Products</a></div>
+    </div>
+    <div class="card-label w-60">
+        <div class="mr-25p"> Products</div>
+    </div>
+</div>
+
+<div class="row2">
+    {% for product in products %}
+    {% set user= get_user_id_by_product(product[7]) %}
+        <div class="mt-20 w-20  ">
+            <div class="card  p-20 ml-10 ">
+                <div>
+                    <div><img src="../static/product_files/images/{{product[3]}}" class="w-100" style="max-width:100%; height:200px; border-radius:14px;"></div>
+                </div>
+                <div class="flex mt-10">
+                    <div>Product Name:</div>
+                    <div class="ml-10 txt-bold">{{product[1]}}</div>
+                </div>
+                <div class="flex">
+                    <div>Product Price:</div>
+                    <div class="ml-10 txt-bold">${{product[2]}}</div>
+                </div>
+                <div class="flex">
+                    <div>Quantity:</div>
+                    <div class="ml-10 txt-bold">{{product[4]}}</div>
+                </div>
+                <div class="flex">
+                    <div>Description:</div>
+                    <div class="ml-10 txt-bold">{{product[5]}}</div>
+                </div>
+                {% if session['user_id'] != product[7] %}
+                <form action="Buy_now">
+                    <input type="hidden" name="product_id" value="{{product[0]}}">
+                    <input type="hidden" name="product_price" value="{{product[2]}}">
+
+                    <div class="flex">
+                         <div>Product Added By:</div>
+                        <div class="ml-10 txt-bold">{{user[1]}}</div>
+                    </div>
+                    <div class="mt-20">
+                        <input type="number" min="1" name="quantity" id="quantity" value="quantity" class="form-btn" placeholder="Quantity" required>
+                    </div>
+                    <div class="mt-10">
+                            <button  class="form-btn">Buynow</button>
+                    </div>
+                </form>
+                {% endif %}
+
+            </div>
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,50 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+    get_users();
+    function remove_from_group(group_member_id,user_group_id){
+        let url = "/remove_from_group?group_member_id="+group_member_id+"&user_group_id="+user_group_id
+        $.get(url, function(data, status){
+        alert(data['message'])
+          view_group_in_members()
+    get_users();
+
+    });
+}
+</script>
+
+<div class=" ">
+    <div class="mt-10 scroll row2">
+        {% for in_group_member in  group_members %}
+        {% set user = get_user_id_in_group_members(in_group_member[2]) %}
+        <div class="w-15 ml-20">
+            <div class="card w-100 p-20 ">
+                <div class="">
+                    <div class="">
+                        <div><img src="../static/E_commerce_files/{{user[7]}}" class="" style="max-width:50%; height:80px; border-radius:50%;"></div>
+                    </div>
+                    <div>
+                        <div class="mt-10">
+                            <div class="flex ml-10 ">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="pink" class="bi bi-person" viewBox="0 0 16 16">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                                </svg>
+                               <div class="ml-5">{{user[1]}}</div>
+                            </div>
+                             <div  class="form-btn " onclick="remove_from_group('{{in_group_member[0]}}','{{in_group_member[1]}}')">
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="pink" class="bi bi-person-fill-dash" viewBox="0 0 16 16">
+                                  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1m0-7a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                  <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
+                                </svg>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+

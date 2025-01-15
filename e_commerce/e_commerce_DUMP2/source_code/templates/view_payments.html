@@ -1,0 +1,34 @@
+{% include 'user_head.html' %}
+
+<div class="mt-120">
+    <div class="card-label">Payments</div>
+</div>
+
+<div class="">
+    {% for payment in payments %}
+    <div class="card w-22 mt-20 p-10 ml-10">
+        <div>
+            <div class="mt-10 flex">
+                <div class=" ">Holder Name:</div>
+                <div class="ml-10">{{payment[3]}}</div>
+            </div>
+            <div class="mt-10 flex">
+                <div class="">Card Number:</div>
+                <div class="ml-10">{{payment[5]}}</div>
+            </div>
+            <div class="mt-10 flex">
+                <div class=" ">Amount:</div>
+                <div class="ml-10">${{payment[2]}}</div>
+            </div>
+            <div class="mt-10 flex">
+                <div class=" ">Date:</div>
+                <div class="ml-10">{{payment[1].strftime("%d-%m-%Y %I:%M %p")}}</div>
+            </div>
+            <div class="mt-10 flex">
+                <div class=" ">Status:</div>
+                <div class="ml-10 txt-g">{{payment[8]}}</div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

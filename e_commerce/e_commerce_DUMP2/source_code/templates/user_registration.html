@@ -1,0 +1,50 @@
+{% include 'main_head.html' %}
+
+
+<div class="mt-120">
+     <div class="card w-30 p-20 m-auto">
+        <form action="user_registration_action" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="email" value="{{email}}">
+            <input type="hidden" name="otp" value="{{otp}}">
+            <div class="card-title">User Registration</div>
+            <div class="mt-10">
+                <label for="otp2">OTP</label>
+                <input type="number" id="otp2" name="otp2" placeholder="Enter OTP" class="form-input" required>
+            </div>
+            <div class="mt-10">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter Name" class="form-input" required>
+            </div>
+             <div class="mt-10">
+                <label for="email">Email</label>
+                 <input id="email" name="email" disabled class="form-input" value="{{email}}">
+            </div>
+             <div class="mt-10">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter Phone" class="form-input" required>
+            </div>
+             <div class="mt-10">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter Password" class="form-input" required>
+            </div>
+            <div class="gender mt-10 flex ">
+                <div> Gender:</div>
+                <input type="radio" id="male" name="gender" value="male" class="ml-10">
+                <label for="male">Male</label><br>
+                <input type="radio" id="female" name="gender" value="female" class="ml-10" >
+                <label for="female">Female</label><br>
+            </div>
+             <div class="mt-10">
+                <label for="profile_picture">Profile Picture:</label>
+                <input type="file" class="form-input" id="profile_picture" name="profile_picture" required>
+            </div>
+            <div class="mt-10">
+                <label for="address">Address</label>
+                <textarea  id="address" name="address"  rows="2" class="form-input" required placeholder="Enter your Address here..."></textarea>
+            </div>
+            <div class="mt-30">
+                <input type="submit" class="form-btn w-100 mt-20  " value="Submit">
+            </div>
+        </form>
+    </div>
+</div>

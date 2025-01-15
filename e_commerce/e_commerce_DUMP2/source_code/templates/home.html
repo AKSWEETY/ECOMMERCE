@@ -1,0 +1,160 @@
+{% include 'user_head.html' %}
+
+<div class="mt-150"></div>
+
+<div class="post-card p-20 w-60 ml-10">
+    <table class="table w-100">
+        <tr>
+            <th>User Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Chat</th>
+        </tr>
+        {% for friend in friends: %}
+            <tr>
+                <td>{{friend[0]}}</td>
+                <td>{{friend[1]}}</td>
+                <td>{{friend[2]}}</td>
+                <td><button class="form-btn" onclick="openChat('{{friend[0]}}','{{friend[1]}}')">Chat</button></td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<script>
+    let refreshIntervalId = null;
+    $(document).ready(function(){
+        getMessages();
+        $("#btn-send").on("click", ()=>{
+            sendMessage()
+        })
+    });
+    function openChat(other_customer_id, other_customer_name){
+        $("#other_customer_name").html(other_customer_name);
+        $("#other_customer_id").val(other_customer_id);
+        if($(".chat").hasClass("chat-toggle")){
+            getMessages();
+            $(".chat").removeClass("chat-toggle");
+            intervalManager(true, getMessage, 1000);
+        }else{
+            $(".chat").addClass("chat-toggle");
+            intervalManager(false);
+        }
+    }
+    function closeChat(){
+        $(".chat").addClass("chat-toggle");
+        intervalManager(false);
+    }
+    function getMessages() {
+        $.get("get_messages?other_customer_id="+$("#other_customer_id").val(), function(data, status){
+            let messages = data['messages']
+            console.log(typeof(messages))
+            console.log(messages)
+            let display_message = "";
+            for(let i=0; i<messages.length; i++){
+                console.log(messages[i][2])
+                console.log($("#other_customer_id").val())
+                if(messages[i][1]!=$("#other_customer_id").val()){
+                    display_message = display_message + `<div class="text-end text-primary txt-indent-3 mt-2">${messages[i][3]}</div>
+                                                        <div class="text-end pe-3 message-text text-muted" >${messages[i][6]}</div>`
+                }else{
+                    display_message = display_message + `<div class="text-start text-success  mt-2">${messages[i][3]}</div>
+                                                        <div class="text-start ps-3 message-text text-muted" >${messages[i][6]}</div>`
+                }
+
+            }
+            console.log(display_message)
+            $(".chat-body-messages").html(display_message)
+            var chat_body_messages = document.getElementById("chat-body-messages");
+            chat_body_messages.scrollTop = chat_body_messages.scrollHeight;
+            setAsReadReceiver()
+            setAsReadSender()
+        });
+
+    }
+    function sendMessage() {
+        let message = $("#message").val()
+        if(message == ""){
+            alert("Enter Message")
+        }else{
+            $.get("send_messages?other_customer_id="+$("#other_customer_id").val()+"&message="+message, function(data, status){
+                console.log(data)
+                $("#message").val("")
+            });
+        }
+
+    }
+    function setAsReadReceiver(){
+        $.get("set_as_read_receiver?other_customer_id="+$("#other_customer_id").val(), function(data, status){
+              console.log(data)
+              isUpdateReceiver = true
+        });
+    }
+    function setAsReadSender(){
+        $.get("set_as_read_sender?other_customer_id="+$("#other_customer_id").val(), function(data, status){
+              console.log(data)
+              isUpdateSender = true
+        });
+    }
+    function getMessage(){
+            $.get("get_message?other_customer_id="+$("#other_customer_id").val(), function(data, status){
+            let messages = data['messages']
+            console.log(typeof(messages))
+            console.log(messages)
+            let display_message = "";
+            for(let i=0; i<messages.length; i++){
+                console.log(messages[i][2])
+                console.log($("#other_customer_id").val())
+                if(messages[i][1]!=$("#other_customer_id").val()){
+                    display_message = display_message + `<div class="text-end text-primary pe-3 mt-1">${messages[i][3]}</div>
+                                                        <div class="text-end pe-3 message-text text-muted" >${messages[i][6]}</div>`
+                }else{
+                    display_message = display_message + `<div class="text-start text-success ps-3 mt-1">${messages[i][3]}</div>
+                                                        <div class="text-start ps-3 message-text text-muted" >${messages[i][6]}</div>`
+                }
+
+            }
+            $(".chat-body-messages").append(display_message)
+            var chat_body_messages = document.getElementById("chat-body-messages");
+            chat_body_messages.scrollTop = chat_body_messages.scrollHeight;
+        });
+    }
+
+    let intervalID = null;
+    function intervalManager(flag,getMessage, time) {
+       if(flag)
+         intervalID =  setInterval(getMessage, time);
+       else
+         clearInterval(intervalID);
+    }
+
+</script>
+<input type="hidden" id="other_customer_id">
+<div id="chat" class="chat chat-toggle p-10 ">
+    <div class="">
+        <div class="flex p-10 space-between">
+            <div class="" id="other_customer_name"></div>
+            <div class="ml-10">
+            <div class="text-end chat-close-btn"  onclick="closeChat()">X</div>
+            </div>
+        </div>
+        <div class=""><hr></div>
+        <div class="chat-body">
+            <div class="chat-body-messages txt-bold" id="chat-body-messages">
+
+            </div>
+            <div class="chat-body-input">
+                <div class="row">
+                    <div class="w-80">
+                        <input type="text" id="message" class="form-input" placeholder="Write your message here">
+                    </div>
+                    <div class="w-20 bt p-10"><a>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" id="btn-send" fill="blue" class="bi bi-send-fill" viewBox="0 0 16 16">
+                          <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
+                        </svg></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

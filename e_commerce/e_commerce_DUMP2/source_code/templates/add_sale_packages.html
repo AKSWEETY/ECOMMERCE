@@ -1,0 +1,29 @@
+{% include "admin_head.html" %}
+<div class="mt-120">
+    <div class="m-auto card w-30 p-30">
+        <div class="">
+            <form action="add_sale_package_action">
+                <div class="card-title">Add Sale Packages</div>
+                <div class="mt-20">
+                    <label for="package_title">Package Title</label>
+                    <input type="text" name="package_title" id="package_title" placeholder="Enter package title" class="form-input" required>
+                </div>
+                <div class="mt-20">
+                    <label for="no_of_customer_reach">Customer Reach (Ex: 1K, 10K, 1M)</label>
+                    <input type="text" name="no_of_customer_reach" id="no_of_customer_reach" placeholder="Enter no of customers to reach" class="form-input" required>
+                </div>
+                <div class="mt-20">
+                    <label for="package_price">Package Price</label>
+                    <input type="number" name="package_price" id="package_price" placeholder="Enter package price" class="form-input" required>
+                </div>
+                <div class="mt-20">
+                    <label for="validity_in_days">Validity</label>
+                    <input type="number" name="validity_in_days" id="validity_in_days" placeholder="Enter validity in days" class="form-input" required>
+                </div>
+                <div class="mt-20">
+                    <input type="submit" value="Add Package" class="form-btn">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

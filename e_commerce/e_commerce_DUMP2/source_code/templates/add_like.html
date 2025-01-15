@@ -1,0 +1,13 @@
+<div>
+    {% set is_liked = is_user_liked_the_post(post_id) %}
+     {% if is_liked %}
+     <button id="likeBtn" class="btn" onclick="add_like('{{post_id}}')">
+        💚 <span id="likes_count{{post_id}}" class="p-10 ">{{count}}</span>
+    </button>
+    {% else %}
+
+    <button id="likeBtn2" class="btn" onclick="add_like('{{post_id}}')">
+       ❤️  <span id="likes_count{{post_id}}" class="p-10 ">{{count}}</span>
+    </button>
+    {% endif %}
+</div>

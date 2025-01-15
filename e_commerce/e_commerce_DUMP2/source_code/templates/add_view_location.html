@@ -1,0 +1,28 @@
+{% include 'admin_head.html'%}
+
+<div class="row space-around">
+    <div class="w-30">
+        <div class="card p-20 mt-150">
+            <form action="add_view_location_action" method="post">
+                    <div class="card-title mb-20 ">Add Locations</div>
+                    <div class="mt-10">
+                        <label for="location_name">Location Name:</label><br>
+                        <input type="text" id="location_name" class="form-input" name="location_name" placeholder="Enter Location" required>
+                    </div>
+                    <div class="mt-10">
+                        <input type="submit" class="form-btn  w-100" value="Add">
+                    </div>
+            </form>
+        </div>
+    </div>
+    <div class="w-30">
+        <div class="card p-30 mt-150">
+            <div class="card-title mb-20 ">View Locations</div>
+            <ol class="ol ml-20">
+                {% for location in locations %}
+                <li>{{location[1]}}</li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+</div>

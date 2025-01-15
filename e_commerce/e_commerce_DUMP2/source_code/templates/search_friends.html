@@ -1,0 +1,27 @@
+{% include "user_head.html" %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#keyword").on("keyup",function(){
+        get_users();
+    });
+});
+function get_users(){
+    let keyword = $("#keyword").val()
+    let url = "/get_users?keyword="+keyword
+    console.log(url)
+    $.get(url, function(data, status){
+        console.log(data)
+        $("#users").html(data)
+    });
+}
+
+</script>
+<div class="mt-120">
+        <div class="flex">
+            <div class="w-30 m-auto">
+                <input type="search" placeholder="Search......" name="keyword" id="keyword"  class="form-input b-radius" >
+            </div>
+        </div>
+</div>
+<div id="users"></div>
